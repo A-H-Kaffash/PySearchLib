@@ -1,16 +1,20 @@
-from pysearchlib.algorithms.linear import linear_search
+from pysearchlib.algorithms.fs_search import file_system_search
 from pysearchlib.benchmark.timer import timer
-from pysearchlib.utils.dataset import generate_sample_data
+import os
 
 def main():
-    data = generate_sample_data(10000)  # 10k فایل
-    pattern = "*.log"
+    search_path = os.getcwd()  # مسیر فعلی پروژه
+    pattern = "*.py"
 
-    with timer("Linear Wildcard Search on 10k items"):
-        results = linear_search(data, pattern)
+    with timer("File System Wildcard Search"):
+        results = file_system_search(search_path, pattern, recursive=True)
 
+    print(f"Searching in: {search_path}")
     print(f"Pattern: {pattern}")
-    print(f"Found {len(results)} items")
+    print(f"Found {len(results)} files")
+
+    for r in results[:10]:  # فقط ۱۰ تای اول
+        print(" -", r)
 
 if __name__ == "__main__":
     main()
