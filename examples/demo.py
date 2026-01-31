@@ -1,19 +1,18 @@
-from pysearchlib.algorithms.fs_search import file_system_search
+from pysearchlib.algorithms.prefix import prefix_search
+from pysearchlib.utils.dataset import generate_sample_data
 from pysearchlib.benchmark.timer import timer
-import os
 
 def main():
-    search_path = os.getcwd()  # مسیر فعلی پروژه
-    pattern = "*.py"
+    data = generate_sample_data(10000)
+    prefix = "file1"
 
-    with timer("File System Wildcard Search"):
-        results = file_system_search(search_path, pattern, recursive=True)
+    with timer("Prefix Search"):
+        results = prefix_search(data, prefix)
 
-    print(f"Searching in: {search_path}")
-    print(f"Pattern: {pattern}")
-    print(f"Found {len(results)} files")
+    print(f"Prefix: {prefix}")
+    print(f"Found {len(results)} items")
 
-    for r in results[:10]:  # فقط ۱۰ تای اول
+    for r in results[:10]:
         print(" -", r)
 
 if __name__ == "__main__":
